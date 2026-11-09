@@ -77,7 +77,7 @@
   var guesses = 0;     // 已经猜了几次
   var finished = false;
 
-  function newGame() {
+  function newGame(shouldFocus) {
     target = 1 + Math.floor(Math.random() * 100);
     guesses = 0;
     finished = false;
@@ -87,7 +87,10 @@
     countEl.textContent = 'Guesses: 0';
     status.textContent = 'Make your first guess.';
     status.classList.remove('is-win');
-    input.focus();
+
+    // 只有玩家主动点「New game」时才抢焦点；
+    // 页面刚加载时抢焦点会把整页滚到输入框那里
+    if (shouldFocus) input.focus();
   }
 
   function complain(message) {
@@ -146,7 +149,7 @@
     input.focus();
   });
 
-  reset.addEventListener('click', newGame);
+  reset.addEventListener('click', function () { newGame(true); });
 
-  newGame();
+  newGame(false);
 })();

@@ -38,9 +38,11 @@ serve\serve.bat
 - `machine.js` —— 只服务 `machine.html`：无用机器与猜数字
 - `verify-parts.mjs` —— 离线检查片段结构与六页接入情况：`node verify-parts.mjs`
 
-## 素材
+## 素材与图标
 
-- 站点图标：`images/z-y.png`
+- `images/z-y.png` —— 原始图形（2048×2048），所有图标的来源
+- `images/icon-180.png` —— 180×180，手机主屏图标（`apple-touch-icon`）
+- `images/favicon-32.png` —— 32×32，浏览器标签页图标
 - 早期版本里的 `bilibili.jpg`、`w3.png`、`xlm.jpg` 已删除，首页也不再外链 B 站
 
 ## 说明
