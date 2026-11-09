@@ -36,7 +36,6 @@ serve\serve.bat
 - `nav.css` —— 导航栏与站内页脚（六页共用）
 - `parts.js` —— 一个 `load(file, target)` 函数，注入导航与页脚，并给当前页高亮
 - `machine.js` —— 只服务 `machine.html`：无用机器与猜数字
-- `verify-parts.mjs` —— 离线检查片段结构与六页接入情况：`node verify-parts.mjs`
 
 ## 素材与图标
 
