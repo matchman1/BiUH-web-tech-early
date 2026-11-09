@@ -1,260 +1,283 @@
 /* ==========================================================================
    styles.css
    --------------------------------------------------------------------------
-   这个文件同时服务四个页面，用大标题分成几部分，互不干扰：
+   六个页面共用这一个文件，用大标题分成几部分：
 
-     【第一部分】 index.html    首页      —— 类名前缀 .index-*
-     【第二部分】 quotes.html   语录页    —— 类名前缀 .quotes-* 与 .q
-     【第三部分】 project.html  项目页    —— 类名前缀 .project-*
-     【第四部分】 contact.html  联系页    —— 类名前缀 .contact-*
-     【第五部分】 深色模式（四页共用，只改颜色不动布局）
+     【0】 设计变量（颜色、宽度）—— 改配色只动这里
+     【1】 index.html    首页      .hero-* / .cards / .card-*
+     【2】 quotes.html   语录页    .quotes-* / .q
+     【3】 project.html  项目页    .project-*
+     【4】 machine.html  机器页    .machine-* / .mx-* / .game-*
+     【5】 about.html    关于页    .about-*
+     【6】 contact.html  联系页    .contact-*
+     【7】 深色模式
 
-   四个页面的类名不交叉：
-     index.html   的 <body class="index">
-     quotes.html  的 <body class="quotes-page">
-     project.html 的 <body class="project-page">
-     contact.html 的 <body class="contact-page">
+   配色只有五个值：黑、白、深灰、中灰、浅灰。
+   页面靠「块」的边界（1px 发丝线、整块反转）来分区域，不靠颜色。
 
-   导航栏的样式不在这里，在 nav.css（四页共用一个导航）。
-   改哪个页面，只看对应的那一部分。
+   导航栏和站内页脚在 nav.css，不在这里。
    ========================================================================== */
 
 
 /* ==========================================================================
-   第一部分：index.html（首页）
+   【0】 设计变量
    ========================================================================== */
 
+:root {
+    /* 五个灰度值 —— 整个站点只用这几个颜色 */
+    --ink:       #111110;   /* 黑：正文、整块背景 */
+    --paper:     #f4f3f0;   /* 白：页面底色（偏暖一点，不那么刺眼） */
+    --card:      #fbfaf8;   /* 卡片底色，比 paper 再亮一档 */
+    --line:      #d8d6d0;   /* 发丝线 */
+    --line-soft: #e7e5e0;   /* 更淡的分隔线 */
+    --muted:     #6f6d68;   /* 次要文字 */
+    --faint:     #9b9993;   /* 小标签、编号 */
+
+    /* 黑底上的文字色：整块反转时用 */
+    --on-ink:    #f4f3f0;
+
+    /* 版心宽度 */
+    --page:      1080px;
+    --narrow:    720px;
+
+    --font: "Inter", "Helvetica Neue", -apple-system, "Segoe UI",
+            "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
 /* --------------------------------------------------------------------------
-   1-1  页面骨架
+   页面骨架
+   注意：背景色写在 body 上，但每个页面也各有一个 class，
+   这样以后要给单页换底色时不用动这里。
    -------------------------------------------------------------------------- */
 
-.index {
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
     margin: 0;
     padding: 0;
-    background: #fdfdfc;
-    color: #1a1a1a;
-    font-family: "Inter", "Helvetica Neue", -apple-system, "Segoe UI",
-                 "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font);
     font-size: 16px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* --------------------------------------------------------------------------
-   1-2  居中容器
-   定宽 + margin auto = 整页内容水平居中
-   -------------------------------------------------------------------------- */
-
-.index-wrap {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 96px 24px 88px;
-    text-align: center;
-}
-
-/* --------------------------------------------------------------------------
-   1-3  标题
-   -------------------------------------------------------------------------- */
-
-.index-title {
-    margin: 0 0 8px;
-    font-size: 34px;
-    font-weight: 400;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-}
-
-.index-label {
-    margin: 0 0 28px;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: #a8a8a8;
-}
-
-/* --------------------------------------------------------------------------
-   1-4  图片
-   改尺寸就改这里的 width 值。
-   重要：不要在 HTML 的 <img> 上写 width="200" 这类属性，
-   HTML 属性优先级高于外部 CSS，会把这里的值盖掉，改了也没反应。
-   -------------------------------------------------------------------------- */
-
-.index-hero {
-    display: block;            /* 图片默认是 inline，不转 block 则 margin auto 不居中 */
-    width: 200px;
+img {
     max-width: 100%;
     height: auto;
-    margin: 32px auto;
-    border-radius: 2px;
 }
 
-.index-inline {
-    display: inline-block;
-    vertical-align: middle;
-    width: 90px;
-    max-width: 100%;
-    height: auto;
-    margin-left: 8px;
-    border-radius: 2px;
-}
-
-/* --------------------------------------------------------------------------
-   1-5  文字与链接
-   -------------------------------------------------------------------------- */
-
-.index-text {
-    margin: 24px 0 0;
-    font-size: 15px;
-    color: #6b6b6b;
-}
-
-.index-link {
-    color: #1a1a1a;
-    text-decoration: none;
-    border-bottom: 1px solid #a8a8a8;
-    padding-bottom: 2px;
-    transition: border-color 0.25s ease, color 0.25s ease;
-}
-
-.index-link:hover {
-    border-bottom-color: #1a1a1a;
-}
-
-/* 包图片的链接：不要下划线，否则会把整行撑出一条线 */
-
-.img-link {
-    display: inline-block;
-    text-decoration: none;
-    border-bottom: 0;
-}
-
-/* --------------------------------------------------------------------------
-   1-6  语录卡片（首页备用，现在 index.html 里没用到）
-   用法：给 <article> 加上 class="index-quote"
-   -------------------------------------------------------------------------- */
-
-.index-quote {
-    margin: 40px 0 0;
-    padding: 24px 26px;
-    background: #fff;
-    border: 1px solid #e6e6e6;
-    border-radius: 2px;
-    color: #1a1a1a;
-    font-size: 17px;
-    font-weight: 300;
-    line-height: 1.55;
-    text-align: left;
-}
-
-.index-quote blockquote {
-    margin: 0;
-}
-
-.index-quote p {
-    margin: 0;
-    font-size: inherit;
+a {
     color: inherit;
 }
 
-.index-quote footer {
-    margin-top: 16px;
+/* 键盘焦点：不用默认蓝框，改成一个跟随文字颜色的轮廓 */
+:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
 }
 
-.index-quote cite {
-    font-style: normal;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: #a8a8a8;
+/* 只有读屏软件读得到的文字（视觉上藏起来，但仍在无障碍树里） */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
 }
 
-/* --------------------------------------------------------------------------
-   1-7  你原来写的通用工具类（保留）
-   -------------------------------------------------------------------------- */
-
-/* 高亮文字 */
-.highlight {
-    background-color: #ff0;
-    color: #000;
+/* 返回首页的链接，几页共用 */
+.back-link {
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: color 0.25s ease, border-color 0.25s ease;
 }
 
-/* 右对齐的页脚文字 */
-.footer {
-    width: 100%;
-    text-align: right;
-}
-
-/* 四列网格 */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-}
-
-/* 黑底大字语录卡片（你最初写的版本，保留作参考；
-   首页现在用的是上面的 .index-quote） */
-.quote {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin: 10px 0;
-    background-color: #000;
-    color: white;
-    font-size: 30px;
-}
-
-/* --------------------------------------------------------------------------
-   1-8  首页移动端
-   -------------------------------------------------------------------------- */
-
-@media (max-width: 480px) {
-    .index-wrap {
-        padding: 56px 20px 64px;
-    }
-
-    .index-title {
-        font-size: 27px;
-    }
+.back-link:hover {
+    color: var(--ink);
+    border-bottom-color: var(--ink);
 }
 
 
 /* ==========================================================================
-   第二部分：quotes.html（语录页）
+   【1】 index.html（首页）
+   一整块黑底 hero + 四张目录卡片
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   2-1  页面骨架
-   -------------------------------------------------------------------------- */
-
-.quotes-page {
-    margin: 0;
-    padding: 0;
-    background: #fdfdfc;
-    color: #1a1a1a;
-    font-family: "Inter", "Helvetica Neue", -apple-system, "Segoe UI",
-                 "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
+.index-main {
+    display: block;
 }
 
 /* --------------------------------------------------------------------------
-   2-2  居中容器
+   1-1  Hero：通栏黑块
    -------------------------------------------------------------------------- */
+
+.hero {
+    background: var(--ink);
+    color: var(--on-ink);
+    padding: clamp(64px, 11vw, 140px) 0 clamp(56px, 9vw, 112px);
+}
+
+.hero-inner {
+    max-width: var(--page);
+    margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 48px);
+}
+
+.hero-kicker {
+    margin: 0 0 28px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    /* 用透明度而不是另一个灰色：深浅模式都不用改 */
+    opacity: 0.55;
+}
+
+.hero-title {
+    margin: 0;
+    font-size: clamp(40px, 7.2vw, 86px);
+    font-weight: 500;
+    line-height: 0.96;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+}
+
+.hero-lede {
+    margin: 30px 0 0;
+    max-width: 46ch;
+    font-size: 16px;
+    line-height: 1.65;
+    opacity: 0.72;
+}
+
+/* --------------------------------------------------------------------------
+   1-2  卡片网格
+   网格的 1px 间隙露出底下的 --line，于是卡片之间自然出现发丝线，
+   不需要给每张卡片单独画边框。
+   -------------------------------------------------------------------------- */
+
+/* 外层只负责版心和上下留白 */
+.cards-section {
+    max-width: var(--page);
+    margin: 0 auto;
+    padding: clamp(40px, 6vw, 72px) clamp(20px, 5vw, 48px);
+}
+
+/* 网格本身的 1px 间隙露出 --line 当分隔线，
+   所以卡片自己不用再画边框，相邻两张之间也只会有一条线。 */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+
+    background: var(--line);
+    border: 1px solid var(--line);
+}
+
+.card {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    min-height: 230px;
+    padding: clamp(24px, 3.2vw, 40px);
+
+    background: var(--card);
+    color: inherit;
+    text-decoration: none;
+
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 悬停时整块反转成黑 —— 这就是「色块」的来源 */
+.card:hover,
+.card:focus-visible {
+    background: var(--ink);
+    color: var(--on-ink);
+}
+
+.card-num {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    color: var(--faint);
+    transition: color 0.3s ease;
+}
+
+.card:hover .card-num {
+    color: inherit;
+    opacity: 0.55;
+}
+
+.card-title {
+    margin: 4px 0 0;
+    font-size: clamp(22px, 2.4vw, 28px);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+}
+
+.card-text {
+    margin: 0;
+    max-width: 36ch;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--muted);
+    transition: color 0.3s ease;
+}
+
+.card:hover .card-text {
+    color: inherit;
+    opacity: 0.78;
+}
+
+.card-arrow {
+    margin-top: auto;
+    padding-top: 18px;
+    font-size: 18px;
+    line-height: 1;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .card-arrow {
+    transform: translateX(6px);
+}
+
+
+/* ==========================================================================
+   【2】 quotes.html（语录页）
+   ========================================================================== */
 
 .quotes-wrap {
-    max-width: 1080px;
+    max-width: var(--page);
     margin: 0 auto;
-    padding: 120px 40px 96px;
+    padding: clamp(56px, 9vw, 110px) clamp(20px, 5vw, 48px) 96px;
 }
 
-/* --------------------------------------------------------------------------
-   2-3  页眉
-   -------------------------------------------------------------------------- */
-
 .quotes-head {
-    margin-bottom: 72px;
+    margin-bottom: clamp(40px, 6vw, 72px);
     text-align: center;
 }
 
@@ -264,56 +287,49 @@
     font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: #a8a8a8;
+    color: var(--faint);
 }
 
 .quotes-head h1 {
     margin: 0;
-    font-size: 46px;
-    font-weight: 400;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
+    font-size: clamp(34px, 5.4vw, 54px);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
 }
 
 .quotes-sub {
     margin: 20px auto 0;
     max-width: 34ch;
     font-size: 15px;
-    color: #6b6b6b;
+    color: var(--muted);
 }
 
-/* --------------------------------------------------------------------------
-   2-4  语录网格
-   用 1px 发丝线代替卡片边框
-   -------------------------------------------------------------------------- */
-
+/* 语录网格：靠 1px 间隙露出底色当分隔线 */
 .quotes-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1px;
-    background: #e6e6e6;
-    border-top: 1px solid #e6e6e6;
-    border-bottom: 1px solid #e6e6e6;
+    background: var(--line);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
 }
-
-/* --------------------------------------------------------------------------
-   2-5  单条语录
-   注意：这里用的是 .q，和第一部分的 .quote / .index-quote 是两套东西
-   -------------------------------------------------------------------------- */
 
 .q {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 32px;
-    padding: 40px;
+
+    padding: clamp(28px, 3.4vw, 40px);
     margin: 0;
-    background: #fdfdfc;
+    background: var(--paper);
     transition: background-color 0.35s ease;
 }
 
 .q:hover {
-    background: #f6f6f4;
+    background: var(--card);
 }
 
 .q blockquote {
@@ -339,103 +355,32 @@
     font-weight: 500;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: #a8a8a8;
+    color: var(--faint);
     transition: color 0.35s ease;
 }
 
 .q:hover cite {
-    color: #6b6b6b;
+    color: var(--muted);
 }
-
-/* --------------------------------------------------------------------------
-   2-6  返回首页
-   -------------------------------------------------------------------------- */
 
 .quotes-foot {
-    margin-top: 80px;
+    margin-top: 72px;
     text-align: center;
-}
-
-.back-link {
-    font-size: 13px;
-    letter-spacing: 0.04em;
-    color: #6b6b6b;
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    padding-bottom: 2px;
-    transition: color 0.25s ease, border-color 0.25s ease;
-}
-
-.back-link:hover {
-    color: #1a1a1a;
-    border-bottom-color: #1a1a1a;
-}
-
-/* --------------------------------------------------------------------------
-   2-7  语录页移动端
-   -------------------------------------------------------------------------- */
-
-@media (max-width: 480px) {
-    .quotes-wrap {
-        padding: 72px 20px 72px;
-    }
-
-    .quotes-head {
-        margin-bottom: 48px;
-    }
-
-    .quotes-head h1 {
-        font-size: 32px;
-    }
-
-    .q {
-        padding: 28px 22px;
-        gap: 22px;
-    }
 }
 
 
 /* ==========================================================================
-   第三部分：project.html（项目想法页）
+   【3】 project.html（项目想法页）
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   3-1  页面骨架
-   -------------------------------------------------------------------------- */
-
-.project-page {
-    margin: 0;
-    padding: 0;
-    background: #fdfdfc;
-    color: #1a1a1a;
-    font-family: "Inter", "Helvetica Neue", -apple-system, "Segoe UI",
-                 "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-}
-
-/* --------------------------------------------------------------------------
-   3-2  居中容器（比首页宽一点，列表读起来更舒服）
-   -------------------------------------------------------------------------- */
-
 .project-wrap {
-    max-width: 720px;
+    max-width: var(--narrow);
     margin: 0 auto;
-    padding: 96px 24px 88px;
+    padding: clamp(56px, 9vw, 110px) clamp(20px, 5vw, 40px) 96px;
 }
-
-/* --------------------------------------------------------------------------
-   3-3  页眉
-   -------------------------------------------------------------------------- */
 
 .project-head {
-    margin-bottom: 72px;
-}
-
-.project-head .back-link {
-    display: inline-block;
-    margin-bottom: 40px;
+    margin-bottom: clamp(40px, 6vw, 64px);
 }
 
 .project-eyebrow {
@@ -444,191 +389,502 @@
     font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: #a8a8a8;
+    color: var(--faint);
 }
 
 .project-head h1 {
     margin: 0;
-    font-size: 40px;
-    font-weight: 400;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
 }
 
 .project-sub {
     margin: 20px 0 0;
     font-size: 15px;
-    color: #6b6b6b;
+    color: var(--muted);
 }
 
-/* --------------------------------------------------------------------------
-   3-4  区块与小区块标题
-   -------------------------------------------------------------------------- */
-
 .project-section {
-    margin-bottom: 64px;
+    margin-bottom: clamp(40px, 6vw, 56px);
 }
 
 .project-label {
-    margin: 0 0 24px;
+    margin: 0 0 20px;
     font-size: 11px;
     font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: #a8a8a8;
+    color: var(--faint);
 }
 
-/* --------------------------------------------------------------------------
-   3-5  项目列表
-   用 1px 发丝线分隔，和语录页的网格是同一套做法
-   -------------------------------------------------------------------------- */
-
+/* 短清单：一行一个，悬停时向右缩进一点 */
 .project-list {
     margin: 0;
     padding: 0;
     list-style: none;
-    border-top: 1px solid #e6e6e6;
+    border-top: 1px solid var(--line);
 }
 
 .project-list li {
-    padding: 18px 4px;
-    border-bottom: 1px solid #e6e6e6;
-    font-size: 17px;
-    font-weight: 300;
+    padding: 16px 4px;
+    border-bottom: 1px solid var(--line);
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
     transition: padding-left 0.25s ease, color 0.25s ease;
 }
 
 .project-list li:hover {
     padding-left: 12px;
-    color: #6b6b6b;
+    color: var(--muted);
 }
 
-/* --------------------------------------------------------------------------
-   3-6  名词解释 dl / dt / dd
-   左边一条竖线把解释归到词条下面
-   -------------------------------------------------------------------------- */
-
+/* 名词解释：左边一条竖线把说明归到词条下面 */
 .project-dl {
     margin: 0;
-    border-left: 1px solid #e6e6e6;
-    padding-left: 24px;
+    border-left: 1px solid var(--line);
+    padding-left: clamp(16px, 3vw, 28px);
 }
 
 .project-dl dt {
-    font-size: 17px;
-    font-weight: 400;
-    color: #1a1a1a;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
 }
 
 .project-dl dd {
-    margin: 6px 0 24px;
+    margin: 6px 0 26px;
     font-size: 15px;
-    color: #6b6b6b;
+    line-height: 1.6;
+    color: var(--muted);
 }
 
 .project-dl dd:last-child {
     margin-bottom: 0;
 }
 
-/* --------------------------------------------------------------------------
-   3-7  项目页移动端
-   -------------------------------------------------------------------------- */
-
-@media (max-width: 480px) {
-    .project-wrap {
-        padding: 56px 20px 64px;
-    }
-
-    .project-head {
-        margin-bottom: 48px;
-    }
-
-    .project-head h1 {
-        font-size: 29px;
-    }
-
-    .project-dl {
-        padding-left: 18px;
-    }
+.project-foot {
+    margin-top: 56px;
 }
-
-
-
-/*==================
-nav
-================*/
-
-nav {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 2rem;
-}
-
-nav .links{
-    display: flex;
-    gap: 1.5rem;
-    margin: 0 auto;
-    list-style: none;
-    padding: 0;
-}
-
-nav a {
-    text-decoration: none;
-    color: #000;
-}
-
-nav .logo {
-    font-weight: 800;
-    color: gold;
-}
-
-nav .action {
-    border: 1.5px solid lightblue;
-    border-radius: 99px;
-    padding: .3em 1em;
-    color: blue;
-}
-
-nav a:hover{color: red;}
 
 
 /* ==========================================================================
-   第四部分：contact.html（联系页）
+   【4】 machine.html（机器页）
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   4-1  页面骨架
-   -------------------------------------------------------------------------- */
+.machine-wrap {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: clamp(56px, 9vw, 110px) clamp(20px, 5vw, 40px) 96px;
+}
 
-.contact-page {
+.machine-head {
+    margin-bottom: clamp(36px, 5vw, 56px);
+}
+
+.machine-eyebrow {
+    margin: 0 0 20px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--faint);
+}
+
+.machine-head h1 {
     margin: 0;
-    padding: 0;
-    background: #fdfdfc;
-    color: #1a1a1a;
-    font-family: "Inter", "Helvetica Neue", -apple-system, "Segoe UI",
-                 "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+}
+
+.machine-sub {
+    margin: 20px 0 0;
+    max-width: 52ch;
+    font-size: 15px;
+    color: var(--muted);
+}
+
+/* 每个实验一块卡片 */
+.machine-lab {
+    margin-top: clamp(24px, 4vw, 40px);
+    padding: clamp(20px, 3vw, 32px);
+    background: var(--card);
+    border: 1px solid var(--line);
+}
+
+.machine-lab-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line-soft);
+}
+
+.machine-label {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.machine-meta {
+    margin: 0;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--faint);
+    font-variant-numeric: tabular-nums;
 }
 
 /* --------------------------------------------------------------------------
-   4-2  居中容器
+   4-1  无用机器
    -------------------------------------------------------------------------- */
+
+.mx-stage {
+    display: grid;
+    place-items: center;
+    padding: clamp(28px, 5vw, 44px) 0 clamp(20px, 3vw, 28px);
+}
+
+/* 黑色的盒子：里面放开关和机械臂 */
+.mx-box {
+    position: relative;
+
+    width: min(320px, 100%);
+    height: 176px;
+
+    background: var(--ink);
+    color: var(--on-ink);
+
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* 两颗螺丝，纯粹是装饰 */
+.mx-screw {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.25;
+}
+
+.mx-screw--right {
+    left: auto;
+    right: 14px;
+}
+
+/* 机械臂：平时藏在左边，is-reaching 时滑到中间，正好顶到开关上 */
+.mx-arm {
+    position: absolute;
+    top: 116px;
+    left: 0;
+
+    width: 42%;
+    height: 12px;
+
+    background: currentColor;
+    opacity: 0.9;
+
+    transform: translateX(-105%);
+    transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.mx-box.is-reaching .mx-arm {
+    transform: translateX(0);
+}
+
+.mx-switch {
+    position: absolute;
+    left: 50%;
+    bottom: 34px;
+
+    display: block;
+    width: 78px;
+    height: 40px;
+
+    padding: 3px;
+    transform: translateX(-50%);
+
+    background: transparent;
+    border: 1.5px solid currentColor;
+    border-radius: 999px;
+    cursor: pointer;
+
+    transition: background-color 0.2s ease;
+}
+
+.mx-switch[aria-pressed="true"] {
+    background: currentColor;
+}
+
+.mx-knob {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: currentColor;
+    transition: transform 0.25s ease, background-color 0.2s ease;
+}
+
+.mx-switch[aria-pressed="true"] .mx-knob {
+    transform: translateX(36px);
+    background: var(--ink);
+}
+
+.mx-status {
+    margin: 8px 0 0;
+    padding-top: 16px;
+    min-height: 2.6em;
+    border-top: 1px solid var(--line-soft);
+
+    font-size: 14px;
+    color: var(--muted);
+    text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   4-2  猜数字
+   -------------------------------------------------------------------------- */
+
+.game-intro {
+    margin: 24px 0 0;
+    font-size: 15px;
+    color: var(--muted);
+}
+
+.game-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.game-input {
+    width: 128px;
+    padding: 10px 14px;
+
+    background: var(--paper);
+    color: var(--ink);
+
+    border: 1px solid var(--line);
+    border-radius: 0;
+
+    font-family: inherit;
+    font-size: 15px;
+    font-variant-numeric: tabular-nums;
+
+    transition: border-color 0.2s ease;
+}
+
+.game-input::placeholder {
+    color: var(--faint);
+}
+
+.game-input:focus {
+    border-color: var(--ink);
+    outline: none;
+}
+
+.game-input:disabled {
+    opacity: 0.45;
+}
+
+.game-btn {
+    padding: 10px 20px;
+
+    background: var(--ink);
+    color: var(--on-ink);
+
+    border: 1px solid var(--ink);
+    border-radius: 0;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.game-btn:hover {
+    background: transparent;
+    color: var(--ink);
+}
+
+.game-btn--ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--line);
+}
+
+.game-btn--ghost:hover {
+    border-color: var(--ink);
+}
+
+.game-status {
+    margin: 22px 0 0;
+    padding: 14px 16px;
+    min-height: 3em;
+
+    border-left: 2px solid var(--line);
+    background: var(--paper);
+
+    font-size: 15px;
+    color: var(--muted);
+}
+
+.game-status.is-win {
+    border-left-color: var(--ink);
+    color: var(--ink);
+    font-weight: 500;
+}
+
+.machine-foot {
+    margin-top: 56px;
+}
+
+
+/* ==========================================================================
+   【5】 about.html（关于页）
+   ========================================================================== */
+
+.about-wrap {
+    max-width: var(--narrow);
+    margin: 0 auto;
+    padding: clamp(56px, 9vw, 110px) clamp(20px, 5vw, 40px) 96px;
+}
+
+.about-head {
+    margin-bottom: clamp(40px, 6vw, 64px);
+}
+
+.about-eyebrow {
+    margin: 0 0 20px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--faint);
+}
+
+.about-head h1 {
+    margin: 0;
+    font-size: clamp(36px, 6vw, 60px);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.035em;
+}
+
+.about-lede {
+    margin: 24px 0 0;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--muted);
+}
+
+.about-section {
+    margin-bottom: clamp(36px, 5vw, 52px);
+}
+
+.about-label {
+    margin: 0 0 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--faint);
+}
+
+.about-section p {
+    margin: 0 0 16px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--muted);
+}
+
+.about-section p:last-child {
+    margin-bottom: 0;
+}
+
+.about-section strong {
+    color: var(--ink);
+    font-weight: 500;
+}
+
+.about-section code {
+    padding: 1px 5px;
+    background: var(--line-soft);
+    color: var(--ink);
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.88em;
+}
+
+/* 事实表：左标签右值，一行一条 */
+.about-facts {
+    margin: 0;
+}
+
+.about-fact {
+    display: grid;
+    grid-template-columns: minmax(96px, 140px) 1fr;
+    gap: 16px;
+
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line-soft);
+}
+
+.about-fact:first-child {
+    border-top: 1px solid var(--line-soft);
+}
+
+.about-fact dt {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--faint);
+    padding-top: 3px;
+}
+
+.about-fact dd {
+    margin: 0;
+    font-size: 15px;
+    color: var(--ink);
+}
+
+.about-foot {
+    margin-top: 56px;
+}
+
+
+/* ==========================================================================
+   【6】 contact.html（联系页）
+   ========================================================================== */
 
 .contact-wrap {
-    max-width: 640px;
+    max-width: var(--narrow);
     margin: 0 auto;
-    padding: 96px 24px 88px;
+    padding: clamp(56px, 9vw, 110px) clamp(20px, 5vw, 40px) 96px;
 }
 
-/* --------------------------------------------------------------------------
-   4-3  页眉
-   -------------------------------------------------------------------------- */
-
 .contact-head {
-    margin-bottom: 56px;
+    margin-bottom: clamp(36px, 5vw, 56px);
 }
 
 .contact-eyebrow {
@@ -637,33 +893,28 @@ nav a:hover{color: red;}
     font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: #a8a8a8;
+    color: var(--faint);
 }
 
 .contact-head h1 {
     margin: 0;
-    font-size: 40px;
-    font-weight: 400;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
 }
 
 .contact-sub {
     margin: 20px 0 0;
     font-size: 15px;
-    color: #6b6b6b;
+    color: var(--muted);
 }
-
-/* --------------------------------------------------------------------------
-   4-4  联系方式列表
-   左边是标签、右边是值，中间用发丝线分隔
-   -------------------------------------------------------------------------- */
 
 .contact-list {
     margin: 0;
     padding: 0;
     list-style: none;
-    border-top: 1px solid #e6e6e6;
+    border-top: 1px solid var(--line);
 }
 
 .contact-list li {
@@ -673,7 +924,7 @@ nav a:hover{color: red;}
     gap: 24px;
 
     padding: 18px 4px;
-    border-bottom: 1px solid #e6e6e6;
+    border-bottom: 1px solid var(--line);
 }
 
 .contact-key {
@@ -682,12 +933,12 @@ nav a:hover{color: red;}
     font-weight: 500;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: #a8a8a8;
+    color: var(--faint);
 }
 
 .contact-value {
     font-size: 15px;
-    color: #1a1a1a;
+    color: var(--ink);
     text-decoration: none;
     border-bottom: 1px solid transparent;
     padding-bottom: 2px;
@@ -695,31 +946,45 @@ nav a:hover{color: red;}
 }
 
 a.contact-value:hover {
-    border-bottom-color: #1a1a1a;
+    border-bottom-color: var(--ink);
 }
-
-/* --------------------------------------------------------------------------
-   4-5  页脚
-   -------------------------------------------------------------------------- */
 
 .contact-foot {
-    margin-top: 72px;
+    margin-top: 56px;
 }
 
-/* --------------------------------------------------------------------------
-   4-6  联系页移动端
-   -------------------------------------------------------------------------- */
 
-@media (max-width: 480px) {
-    .contact-wrap {
-        padding: 56px 20px 64px;
+/* ==========================================================================
+   【7】 响应式
+   ========================================================================== */
+
+@media (max-width: 720px) {
+
+    /* 首页卡片改成单列 */
+    .cards {
+        grid-template-columns: minmax(0, 1fr);
     }
 
-    .contact-head h1 {
-        font-size: 29px;
+    .card {
+        min-height: 180px;
     }
 
-    /* 窄屏改成上下两行，避免长邮箱挤在一起 */
+    /* 机器盒子矮一点，窄屏不至于占满一屏 */
+    .mx-box {
+        height: 156px;
+    }
+
+    .mx-arm {
+        top: 96px;
+    }
+
+    /* 事实表改成上下两行 */
+    .about-fact {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+
+    /* 联系页的长邮箱不要挤在一起 */
     .contact-list li {
         flex-direction: column;
         align-items: flex-start;
@@ -729,86 +994,30 @@ a.contact-value:hover {
 
 
 /* ==========================================================================
-   第五部分：深色模式（四页共用，只改颜色不动布局）
+   【8】 深色模式
+   只换变量，不改布局 —— 所有规则都读变量，所以这里只需要重定义 :root
    ========================================================================== */
 
 @media (prefers-color-scheme: dark) {
 
-    /* 首页 */
-    .index {
-        background: #0e0e0e;
-        color: #ededed;
+    :root {
+        --ink:       #efeeea;   /* 这里的「墨」是浅色 */
+        --paper:     #0c0c0b;
+        --card:      #131312;
+        --line:      #2a2a28;
+        --line-soft: #211f1e;
+        --muted:     #a3a19c;
+        --faint:     #6f6d68;
+        --on-ink:    #0c0c0b;
     }
+}
 
-    .index-link {
-        color: #ededed;
-    }
-
-    .index-quote {
-        background: #161616;
-        border-color: #262626;
-        color: #ededed;
-    }
-
-    /* 语录页 */
-    .quotes-page {
-        background: #0e0e0e;
-        color: #ededed;
-    }
-
-    .quotes-grid {
-        background: #262626;
-        border-color: #262626;
-    }
-
-    .q {
-        background: #0e0e0e;
-    }
-
-    .q:hover {
-        background: #161616;
-    }
-
-    .back-link:hover {
-        color: #ededed;
-    }
-
-    /* 项目页 */
-    .project-page {
-        background: #0e0e0e;
-        color: #ededed;
-    }
-
-    .project-list,
-    .project-list li,
-    .project-dl {
-        border-color: #262626;
-    }
-
-    .project-dl dt {
-        color: #ededed;
-    }
-
-    .project-list li:hover {
-        color: #9a9a9a;
-    }
-
-    /* 联系页 */
-    .contact-page {
-        background: #0e0e0e;
-        color: #ededed;
-    }
-
-    .contact-list,
-    .contact-list li {
-        border-color: #262626;
-    }
-
-    .contact-value {
-        color: #ededed;
-    }
-
-    a.contact-value:hover {
-        border-bottom-color: #ededed;
+/* 系统开了「减少动态效果」就不要这些过渡 */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
     }
 }

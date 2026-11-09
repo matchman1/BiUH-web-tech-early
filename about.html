@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — Chen Erjian</title>
+    <meta name="description" content="Who writes this site, how the pages are put together, and what I would change next time.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="nav.css">
+    <link rel="icon" href="images/favicon-256.png" type="image/png">
+</head>
+<body class="about-page">
+
+    <!-- 导航由 parts.js 把 nav.html 的内容填进这里，所以这里是空的 -->
+    <header id="site-header"></header>
+
+    <main class="about-wrap">
+
+        <header class="about-head">
+            <p class="about-eyebrow">About</p>
+            <h1>Chen Erjian</h1>
+            <p class="about-lede">
+                First-year Computer Science at Hainan Bielefeld University of Applied Sciences.
+                This site is my coursework for Web Technologies — six pages, written one file
+                at a time, no framework and no build step.
+            </p>
+        </header>
+
+        <section class="about-section">
+            <h2 class="about-label">What is here</h2>
+            <p>
+                A collection of quotes I keep rereading, six project ideas with the person each
+                one is for, a machine that switches itself off, and this page — which is mostly
+                an excuse to explain the other three.
+            </p>
+        </section>
+
+        <section class="about-section">
+            <h2 class="about-label">How it is built</h2>
+
+            <dl class="about-facts">
+                <div class="about-fact">
+                    <dt>Pages</dt>
+                    <dd>6 — home, quotes, projects, machine, about, contact</dd>
+                </div>
+                <div class="about-fact">
+                    <dt>Stylesheets</dt>
+                    <dd>2 — <code>styles.css</code> for pages, <code>nav.css</code> for the shared bar and footer</dd>
+                </div>
+                <div class="about-fact">
+                    <dt>Scripts</dt>
+                    <dd>2 — <code>parts.js</code> injects the navigation, <code>machine.js</code> runs the toys</dd>
+                </div>
+                <div class="about-fact">
+                    <dt>Framework</dt>
+                    <dd>None. Plain HTML, CSS and JavaScript</dd>
+                </div>
+                <div class="about-fact">
+                    <dt>Hosting</dt>
+                    <dd>GitHub Pages, published from the <code>main</code> branch</dd>
+                </div>
+            </dl>
+        </section>
+
+        <section class="about-section">
+            <h2 class="about-label">Two decisions</h2>
+            <p>
+                <strong>The navigation is written once.</strong> <code>nav.html</code> holds a bare
+                <code>&lt;nav&gt;</code> fragment and <code>parts.js</code> fetches it into every
+                page, so adding a page means editing one file instead of six. The same fetch loads
+                <code>footer.html</code>. It also means the pages must be opened over HTTP —
+                <code>fetch()</code> is blocked on <code>file://</code>.
+            </p>
+            <p>
+                <strong>One palette, no colour.</strong> Black, white and three greys. Every block
+                on this site is one of those five values, which makes the layout carry the design
+                instead of the other way round.
+            </p>
+        </section>
+
+        <section class="about-section">
+            <h2 class="about-label">What I would change</h2>
+            <p>
+                The quotes page should filter by author. The machine could keep a small history of
+                failed attempts. And the whole site should probably be one page with sections and
+                scroll snapping — but six pages is what the course asked for, and it is the honest
+                version of what I can build today.
+            </p>
+        </section>
+
+        <footer class="about-foot">
+            <a class="back-link" href="index.html">← Back home</a>
+        </footer>
+
+    </main>
+
+    <!-- 页脚由 parts.js 把 footer.html 的内容填进这里，所以这里是空的 -->
+    <footer id="site-footer"></footer>
+
+    <!-- 放在 </body> 前：此时两个空元素都已存在，脚本才找得到它们 -->
+    <script src="parts.js"></script>
+</body>
+</html>

@@ -1,25 +1,33 @@
 /* ==========================================================================
    nav.css
    --------------------------------------------------------------------------
-   导航栏样式。三个页面共用这一个文件，因为它必须长得完全一样。
+   导航栏 + 站内页脚的样式。六个页面共用这两个文件，因为它们必须长得完全一样。
 
    为什么单独一个文件、而不是写进 styles.css？
-     因为 index.html / quotes.html 用的是 styles.css，
-     而 project.html 用的是 styles-dd.css。
-     写在任何一个里面，另一个页面就套不上。
-     单独一个 nav.css，三页都 <link> 它就行。
+     因为导航和页脚是「零件」——由 parts.js 把 nav.html / footer.html
+     注入到每个页面的 #site-header / #site-footer 里。
+     放在单独的文件里，改一处，六页同时变。
 
-   样式由 parts.js 注入的 nav.html 片段使用：
-     <nav>
-       <a class="logo">…</a>
-       <ul class="links"> <li><a>…</a></li> … </ul>
-     </nav>
+   颜色全部来自 styles.css 里 :root 的变量
+   （--ink / --paper / --line / --muted / --faint），
+   所以深色模式在 styles.css 里换一次变量就够了，这里不用重复写。
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
    1  导航外框
    吸顶 + 半透明毛玻璃 + 底部一条发丝线
+
+   注意 #site-header：nav 是被子注入到 <header id="site-header"> 里的，
+   而 sticky 元素只能在自己的「包含块」里滑动 —— 如果这个 header 只有
+   导航那么高，nav 就永远没有可滑动的空间，等于没吸顶。
+   所以真正吸顶的是 header 本身，nav 只管长什么样。
    -------------------------------------------------------------------------- */
+
+#site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
 
 nav {
     position: sticky;
@@ -33,17 +41,16 @@ nav {
        横向间距全部由 .pill 的 margin-left 控制。
        原先这里写了 justify-content:space-between + gap:24px，
        会让剩余空间被分成两块 —— 一块把 .links 推到中途、一块把药丸推到最右，
-       结果 home/quotes/project 停在中间而不靠右。 */
+       结果链接停在中间而不靠右。 */
 
     padding: 14px clamp(20px, 5vw, 48px);
 
-    background: rgba(253, 253, 252, 0.82);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid #e6e6e6;
+    background: rgba(244, 243, 240, 0.84);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
 
-    font-family: "Inter", "Helvetica Neue", -apple-system, "Segoe UI",
-                 "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    font-family: var(--font);
 }
 
 /* 导航里的链接一律不带默认下划线，由各自的形态决定样式 */
@@ -64,7 +71,7 @@ nav .pill {
 
     /* 与 .links 之间的距离。
        nav 上已经没有 gap（见 1 的注释），所以这段间距写在这里。 */
-    margin-left: 40px;
+    margin-left: clamp(16px, 3vw, 36px);
 
     padding: 6px 16px;
 
@@ -74,12 +81,12 @@ nav .pill {
     line-height: 1.4;
     white-space: nowrap;
 
-    color: #1a1a1a;
+    color: var(--ink);
     background: transparent;
 
     /* 两端半圆的药丸形状：
        半径大于等于高度的一半，浏览器会自动收敛成半圆，所以写个大值最稳 */
-    border: 1px solid #d8d8d8;
+    border: 1px solid var(--line);
     border-radius: 999px;
 
     transition: background-color 0.25s ease,
@@ -88,16 +95,16 @@ nav .pill {
 }
 
 nav .pill:hover {
-    color: #fdfdfc;
-    background: #1a1a1a;
-    border-color: #1a1a1a;
+    color: var(--paper);
+    background: var(--ink);
+    border-color: var(--ink);
 }
 
 /* 当前就停在联系页时，药丸保持实心（由 parts.js 加 .active） */
 nav .pill.active {
-    color: #fdfdfc;
-    background: #1a1a1a;
-    border-color: #1a1a1a;
+    color: var(--paper);
+    background: var(--ink);
+    border-color: var(--ink);
 }
 
 /* --------------------------------------------------------------------------
@@ -112,7 +119,7 @@ nav .logo {
     font-size: 14px;
     font-weight: 500;
     letter-spacing: -0.01em;
-    color: #1a1a1a;
+    color: var(--ink);
     white-space: nowrap;
 }
 
@@ -135,7 +142,7 @@ nav .logo:hover svg {
 nav .links {
     display: flex;
     align-items: center;
-    gap: clamp(18px, 3vw, 32px);
+    gap: clamp(16px, 2.6vw, 30px);
 
     margin: 0 0 0 auto;
     padding: 0;
@@ -147,13 +154,13 @@ nav .links a {
 
     font-size: 14px;
     letter-spacing: 0.01em;
-    color: #6b6b6b;
+    color: var(--muted);
 
     transition: color 0.25s ease;
 }
 
 nav .links a:hover {
-    color: #1a1a1a;
+    color: var(--ink);
 }
 
 /* 悬停下划线：从左侧生长出来，比直接变色更细腻 */
@@ -177,12 +184,12 @@ nav .links a:hover::after {
 }
 
 /* --------------------------------------------------------------------------
-   4  当前页高亮
+   5  当前页高亮
    由 parts.js 比对地址后给当前页加 .active
    -------------------------------------------------------------------------- */
 
 nav .links a.active {
-    color: #1a1a1a;
+    color: var(--ink);
 }
 
 nav .links a.active::after {
@@ -190,78 +197,47 @@ nav .links a.active::after {
 }
 
 /* --------------------------------------------------------------------------
-   5  移动端
+   6  移动端
+   窄屏放不下五个链接 + 药丸，所以：
+     · 隐藏 logo 的文字，只留图标（图标本身也链回首页）
+     · 隐藏 Home —— 图标就是首页入口，重复一次只是浪费宽度
+     · 间距和字号缩小，药丸收紧但仍保留文字
    -------------------------------------------------------------------------- */
 
-@media (max-width: 560px) {
+@media (max-width: 620px) {
     nav {
-        padding: 12px 20px;
+        padding: 12px 18px;
     }
 
-    /* 窄屏放不下 logo 文字，只留图标 */
     nav .logo span {
         display: none;
     }
 
+    /* 第一项是 Home，和左边的 logo 指向同一个地址 */
+    nav .links li:first-child {
+        display: none;
+    }
+
     nav .links {
-        gap: 16px;
+        gap: 14px;
     }
 
     nav .links a {
         font-size: 13px;
     }
 
-    /* 窄屏收紧药丸，但不隐藏文字（它是唯一入口，不能只剩个圆点） */
     nav .pill {
-        margin-left: 20px;
+        margin-left: 14px;
         padding: 5px 12px;
         font-size: 12px;
-    }
-}
-
-/* --------------------------------------------------------------------------
-   6  深色模式
-   -------------------------------------------------------------------------- */
-
-@media (prefers-color-scheme: dark) {
-    nav {
-        background: rgba(14, 14, 14, 0.82);
-        border-bottom-color: #262626;
-    }
-
-    nav .logo,
-    nav .links a:hover,
-    nav .links a.active {
-        color: #ededed;
-    }
-
-    nav .links a {
-        color: #9a9a9a;
-    }
-
-    nav .pill {
-        color: #ededed;
-        border-color: #3a3a3a;
-    }
-
-    nav .pill:hover {
-        color: #0e0e0e;
-        background: #ededed;
-        border-color: #ededed;
-    }
-
-    nav .pill.active {
-        color: #0e0e0e;
-        background: #ededed;
-        border-color: #ededed;
     }
 }
 
 /* ==========================================================================
    站内页脚 #site-footer
    --------------------------------------------------------------------------
-   和导航一样，这是四个页面共用的组件（由 parts.js 把 footer.html 注入进来），
-   所以样式放在这个文件里，不写进任何单个页面的 styles.css。
+   和导航一样，这是六个页面共用的组件（由 parts.js 把 footer.html 注入进来），
+   所以样式放在这个文件里，不写进任何单个页面。
    ========================================================================== */
 
 #site-footer {
@@ -270,13 +246,12 @@ nav .links a.active::after {
 
     /* 上方留白 + 一条发丝线，和导航的下边框呼应 */
     padding: 40px clamp(24px, 6vw, 64px) 56px;
-    border-top: 1px solid #e6e6e6;
+    border-top: 1px solid var(--line);
 
-    font-family: "Inter", "Helvetica Neue", -apple-system, "Segoe UI",
-                 "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    font-family: var(--font);
     font-size: 13px;
     line-height: 1.6;
-    color: #a8a8a8;
+    color: var(--faint);
 }
 
 #site-footer p {
@@ -290,7 +265,7 @@ nav .links a.active::after {
 }
 
 #site-footer a {
-    color: #6b6b6b;
+    color: var(--muted);
     text-decoration: none;
     border-bottom: 1px solid transparent;
     padding-bottom: 2px;
@@ -298,26 +273,17 @@ nav .links a.active::after {
 }
 
 #site-footer a:hover {
-    color: #1a1a1a;
-    border-bottom-color: #1a1a1a;
+    color: var(--ink);
+    border-bottom-color: var(--ink);
 }
 
 /* --------------------------------------------------------------------------
-   7  页脚深色模式
+   7  深色模式
+   只改导航的毛玻璃底色：其余颜色都来自 variables，已经在 styles.css 换过了
    -------------------------------------------------------------------------- */
 
 @media (prefers-color-scheme: dark) {
-    #site-footer {
-        border-top-color: #262626;
-        color: #6f6f6f;
-    }
-
-    #site-footer a {
-        color: #9a9a9a;
-    }
-
-    #site-footer a:hover {
-        color: #ededed;
-        border-bottom-color: #ededed;
+    nav {
+        background: rgba(12, 12, 11, 0.84);
     }
 }

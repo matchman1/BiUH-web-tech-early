@@ -7,9 +7,21 @@
 // 用 Node 原生读文件模拟 fetch，用极简 DOM 模拟浏览器 API。
 
 import { readFile } from 'node:fs/promises';
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const DIR = 'C:/Users/itx/Desktop/BiUH-web/';
-const PAGES = ['index.html', 'quotes.html', 'project.html', 'contact.html'];
+// 站点根目录 = 这个脚本所在的目录（以前硬编码成某台机器的绝对路径，
+// 换一台电脑就找不到文件）
+const DIR = dirname(fileURLToPath(import.meta.url)) + '/';
+
+const PAGES = [
+  'index.html',
+  'quotes.html',
+  'project.html',
+  'machine.html',
+  'about.html',
+  'contact.html',
+];
 
 // ---------------------------------------------------------------------------
 // 极简 DOM 模拟
@@ -57,7 +69,7 @@ function checkFragment(html, kind) {
     if (!/class="logo"/.test(html)) problems.push('缺少 .logo');
     if (!/class="links"/.test(html)) problems.push('缺少 .links');
     if (!/class="pill"/.test(html)) problems.push('缺少 .pill');
-    for (const f of ['index.html', 'quotes.html', 'project.html'])
+    for (const f of ['index.html', 'quotes.html', 'project.html', 'machine.html', 'about.html'])
       if (!html.includes(`href="${f}"`)) problems.push(`缺少指向 ${f} 的链接`);
     if (!/<li>\s*<a href="[^"]+">[^<]*<\/a>\s*<\/li>/.test(html))
       problems.push('<li> 没有正确包住 <a>');
@@ -173,7 +185,7 @@ function checkFragment(html, kind) {
   }
 
   // 页面接入检查
-  console.log('\n=== 四页接入检查 ===');
+  console.log('\n=== 六页接入检查 ===');
   for (const page of PAGES) {
     const html = await readFile(DIR + page, 'utf8');
     const h = /<header id="site-header"><\/header>/.test(html);
@@ -188,7 +200,7 @@ function checkFragment(html, kind) {
   console.log('\n=== 结论 ===');
   const pass = allOk && problems === 0;
   console.log(pass
-    ? '✅ 全部通过：两个片段结构正确，四页导航与页脚注入、高亮均正常'
+    ? '✅ 全部通过：两个片段结构正确，六页导航与页脚注入、高亮均正常'
     : '❌ 有问题，见上方 ❌ 项');
   process.exit(pass ? 0 : 1);
 })();

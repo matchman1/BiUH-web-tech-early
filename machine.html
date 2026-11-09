@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Machine — Chen Erjian</title>
+    <meta name="description" content="A useless machine that turns its own switch off, and a number guessing game.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="nav.css">
+    <link rel="icon" href="images/favicon-256.png" type="image/png">
+</head>
+<body class="machine-page">
+
+    <!-- 导航由 parts.js 把 nav.html 的内容填进这里，所以这里是空的 -->
+    <header id="site-header"></header>
+
+    <main class="machine-wrap">
+
+        <header class="machine-head">
+            <p class="machine-eyebrow">Toy · 01</p>
+            <h1>The useless machine</h1>
+            <p class="machine-sub">
+                A switch, an arm, and one firm decision: the switch stays off.
+                Below it, a number game that is only slightly more useful.
+            </p>
+        </header>
+
+        <!-- ---------------------------------------------------------------
+             无用机器
+             --------------------------------------------------------------- -->
+        <section class="machine-lab" aria-labelledby="lab-title">
+            <div class="machine-lab-head">
+                <h2 class="machine-label" id="lab-title">The switch</h2>
+                <p class="machine-meta" id="mx-count">Flips: 0</p>
+            </div>
+
+            <div class="mx-stage">
+                <div class="mx-box">
+                    <span class="mx-screw" aria-hidden="true"></span>
+                    <span class="mx-screw mx-screw--right" aria-hidden="true"></span>
+                    <span class="mx-arm" id="mx-arm" aria-hidden="true"></span>
+
+                    <button class="mx-switch" id="mx-switch" type="button" aria-pressed="false">
+                        <span class="mx-knob" aria-hidden="true"></span>
+                        <span class="sr-only">Flip the switch on</span>
+                    </button>
+                </div>
+            </div>
+
+            <p class="mx-status" id="mx-status" role="status" aria-live="polite">
+                The switch is off. Try to turn it on.
+            </p>
+        </section>
+
+        <!-- ---------------------------------------------------------------
+             猜数字
+             --------------------------------------------------------------- -->
+        <section class="machine-lab" aria-labelledby="game-title">
+            <div class="machine-lab-head">
+                <h2 class="machine-label" id="game-title">Number game</h2>
+                <p class="machine-meta" id="game-count">Guesses: 0</p>
+            </div>
+
+            <p class="game-intro">
+                I am thinking of a number between <strong>1</strong> and <strong>100</strong>.
+                You have as many guesses as you need — I will only tell you higher or lower.
+            </p>
+
+            <form class="game-form" id="game-form" novalidate>
+                <label class="sr-only" for="game-input">Your guess</label>
+                <input class="game-input" id="game-input" name="guess" type="number"
+                       inputmode="numeric" min="1" max="100" step="1" placeholder="1–100"
+                       autocomplete="off">
+                <button class="game-btn" type="submit">Guess</button>
+                <button class="game-btn game-btn--ghost" type="button" id="game-reset">New game</button>
+            </form>
+
+            <p class="game-status" id="game-status" role="status" aria-live="polite">
+                Make your first guess.
+            </p>
+        </section>
+
+        <footer class="machine-foot">
+            <a class="back-link" href="index.html">← Back home</a>
+        </footer>
+
+    </main>
+
+    <!-- 页脚由 parts.js 把 footer.html 的内容填进这里，所以这里是空的 -->
+    <footer id="site-footer"></footer>
+
+    <!-- parts.js 注入导航和页脚；machine.js 只管这一页的两个玩具 -->
+    <script src="parts.js"></script>
+    <script src="machine.js"></script>
+</body>
+</html>

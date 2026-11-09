@@ -13,5 +13,7 @@ Set shell = CreateObject("WScript.Shell")
 ' Folder this .vbs sits in
 here = fso.GetParentFolderName(WScript.ScriptFullName)
 
+' The "hidden" argument tells serve.bat not to stop at its final
+' pause -- otherwise a windowless cmd.exe would sit there forever.
 ' 0 = hidden window, False = do not wait for it to finish
-shell.Run """" & here & "\serve.bat""", 0, False
+shell.Run """" & here & "\serve.bat"" hidden", 0, False

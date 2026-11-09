@@ -1,33 +1,69 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My First HTML Page</title>
+    <title>Chen Erjian — Web Technologies 2026</title>
+    <meta name="description" content="A small site built by hand with HTML, CSS and JavaScript: quotes, project ideas, a useless machine, and notes on how it was made.">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="nav.css">
-    <link rel="icon" href="xlm.jpg" type="image/png">
+    <link rel="icon" href="images/favicon-256.png" type="image/png">
 </head>
 <body class="index">
 
     <!-- 导航由 parts.js 把 nav.html 的内容填进这里，所以这里是空的 -->
     <header id="site-header"></header>
 
-    <main class="index-wrap">
-        <h1 class="index-title">Welcome to My First HTML Page</h1>
+    <main class="index-main">
 
-        <h2 class="index-label">Famous Quotes</h2>
+        <!-- 首屏：一整块黑底，放一句定位 -->
+        <section class="hero">
+            <div class="hero-inner">
+                <p class="hero-kicker">Web Technologies · 2026</p>
+                <h1 class="hero-title">Six pages,<br>built by hand.</h1>
+                <p class="hero-lede">
+                    No framework, no build step — just HTML, CSS and a little JavaScript.
+                    Quotes worth reading twice, ideas I might build next, a machine that
+                    does nothing on purpose, and the notes behind all of it.
+                </p>
+            </div>
+        </section>
 
-        <!-- 注意：这里不要写 width 属性，尺寸由 styles.css 第一部分 1-4 的 .index-hero 控制 -->
-        <a class="img-link" href="https://bilibili.com" target="_blank" rel="noopener">
-            <img class="index-hero" src="bilibili.jpg" alt="fun image">
-        </a>
+        <!-- 四张目录卡片 -->
+        <section class="cards-section" aria-label="Sections of this site">
+            <div class="cards">
 
-        <p> <img class="index-inline" src="xlm.jpg" alt="fun image"></p>
-        <p class="index-text">Here are some <a class="index-link" href="quotes.html">quotes</a></p>
+                <a class="card" href="quotes.html">
+                    <span class="card-num">01</span>
+                    <h2 class="card-title">Quotes</h2>
+                    <p class="card-text">Eight lines worth reading twice, from Žižek to Engelbart.</p>
+                    <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
 
-        <p> <img class="index-inline" src="xlm.jpg" alt="fun image"></p>
-        <p class="index-text">Here are some <a class="index-link" href="project.html">project</a></p>
+                <a class="card" href="project.html">
+                    <span class="card-num">02</span>
+                    <h2 class="card-title">Project ideas</h2>
+                    <p class="card-text">Six things I would like to build next, and who each one is for.</p>
+                    <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+                <a class="card" href="machine.html">
+                    <span class="card-num">03</span>
+                    <h2 class="card-title">The machine</h2>
+                    <p class="card-text">A switch that turns itself off, plus a number game.</p>
+                    <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+                <a class="card" href="about.html">
+                    <span class="card-num">04</span>
+                    <h2 class="card-title">About</h2>
+                    <p class="card-text">Who writes this, how the pages are put together, and what I would change.</p>
+                    <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+            </div>
+        </section>
+
     </main>
 
     <!-- 页脚由 parts.js 把 footer.html 的内容填进这里，所以这里是空的 -->
