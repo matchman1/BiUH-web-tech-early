@@ -15,7 +15,7 @@ BiUH Web Tech 网站早期版本的一个副本，现在作为独立站点继续
 | `quotes.html` | 八条引文 |
 | `project.html` | 六个项目想法，每个一句话说明 |
 | `machine.html` | 无用机器（开关会自己关掉）+ 猜数字游戏 |
-| `about.html` | 我是谁、这站怎么拼起来的、下次会怎么改 |
+| `about.html` | 这站是怎么拼起来的、下次会怎么改 |
 | `contact.html` | 联系方式 |
 
 `nav.html` 和 `footer.html` 是**片段**，不是完整页面：它们由 `parts.js` 用 `fetch()` 拉取后注入每页的 `#site-header` / `#site-footer`。改导航只需要改这一处，六页同时变。
@@ -44,7 +44,3 @@ serve\serve.bat
 - `images/icon-180.png` —— 180×180，手机主屏图标（`apple-touch-icon`）
 - `images/favicon-32.png` —— 32×32，浏览器标签页图标
 - 早期版本里的 `bilibili.jpg`、`w3.png`、`xlm.jpg` 已删除，首页也不再外链 B 站
-
-## 说明
-
-`backup/`、`.pdfwork/`、`p2/`、`1.pdf` 都是当时的工作产物，原样保留，不参与站点运行。
