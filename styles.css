@@ -60,6 +60,9 @@ html {
     -webkit-text-size-adjust: 100%;
 }
 
+/* 每一页都是「导航 + 内容 + 页脚」三行的竖向布局：
+   flex 列 + min-height:100vh + main 撑满，短页面（比如联系页）的页脚
+   才不会浮在屏幕中间。 */
 body {
     margin: 0;
     padding: 0;
@@ -70,6 +73,14 @@ body {
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1 0 auto;
 }
 
 img {
@@ -631,8 +642,8 @@ a {
 
 .mx-knob {
     display: block;
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background: currentColor;
     transition: transform 0.25s ease, background-color 0.2s ease;
