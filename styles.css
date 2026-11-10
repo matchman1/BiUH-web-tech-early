@@ -182,7 +182,67 @@ a {
 }
 
 /* --------------------------------------------------------------------------
-   1-2  卡片网格
+   1-2  Hero 图片
+   来自另一个站 Hardware Reference，点进去就是那里。
+   图片本身是彩色的，这里用 grayscale 压成单色，鼠标悬停才放开颜色 ——
+   既保住全站的黑白灰，又暗示「点进去有另一个世界」。
+   -------------------------------------------------------------------------- */
+
+.hero-photo {
+    display: block;
+    max-width: var(--page);
+    margin: 0 auto;
+    padding: clamp(32px, 5vw, 56px) clamp(20px, 5vw, 48px) 0;
+
+    color: inherit;
+    text-decoration: none;
+}
+
+.hero-photo-frame {
+    display: block;
+    overflow: hidden;
+}
+
+.hero-photo img {
+    display: block;
+    width: 100%;
+    height: auto;
+
+    filter: grayscale(1) contrast(1.06) brightness(0.96);
+    transition: filter 0.45s ease, transform 0.7s ease;
+}
+
+.hero-photo:hover img,
+.hero-photo:focus-visible img {
+    filter: grayscale(0) contrast(1.02);
+    transform: scale(1.015);
+}
+
+.hero-photo-credit {
+    display: block;
+    margin-top: 12px;
+
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--faint);
+
+    transition: color 0.25s ease;
+}
+
+.hero-photo-credit strong {
+    font-weight: 500;
+    color: var(--muted);
+    transition: color 0.25s ease;
+}
+
+.hero-photo:hover .hero-photo-credit strong {
+    color: var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   1-3  卡片网格
    网格的 1px 间隙露出底下的 --line，于是卡片之间自然出现发丝线，
    不需要给每张卡片单独画边框。
    -------------------------------------------------------------------------- */
@@ -315,6 +375,73 @@ a {
     max-width: 34ch;
     font-size: 15px;
     color: var(--muted);
+}
+
+/* --------------------------------------------------------------------------
+   随机引文 hero
+   页面顶部那条「随机一条」，内容由 quotes.js 从下面的卡片里挑
+   -------------------------------------------------------------------------- */
+
+.quote-hero {
+    margin: 0 0 clamp(40px, 6vw, 64px);
+    padding: clamp(24px, 4vw, 44px);
+
+    background: var(--card);
+    border: 1px solid var(--line);
+}
+
+.quote-hero-label {
+    margin: 0 0 20px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--faint);
+}
+
+.quote-hero-text {
+    margin: 0;
+}
+
+.quote-hero-text p {
+    margin: 0;
+    font-size: clamp(20px, 2.6vw, 30px);
+    font-weight: 300;
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+}
+
+.quote-hero-cite {
+    margin: 18px 0 0;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.quote-hero-btn {
+    margin-top: 26px;
+    padding: 9px 18px;
+
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 0;
+
+    font-family: inherit;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.quote-hero-btn:hover {
+    background: var(--ink);
+    color: var(--on-ink);
+    border-color: var(--ink);
 }
 
 /* 语录网格：靠 1px 间隙露出底色当分隔线 */

@@ -9,6 +9,16 @@
     <link rel="stylesheet" href="nav.css">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="images/icon-180.png">
+    <!-- 链接预览（Open Graph）。og:image 必须是完整网址，抓取器不会帮你补域名 -->
+    <meta property="og:title" content="Web Tech 2026 — built by hand">
+    <meta property="og:description" content="Six hand-built pages: quotes, project ideas, a useless machine, and the notes behind it.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://matchman1.github.io/BiUH-web-tech-early/">
+    <meta property="og:image" content="https://matchman1.github.io/BiUH-web-tech-early/images/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Web Tech 2026">
+    <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
 
@@ -30,6 +40,16 @@
             </div>
         </section>
 
+        <!-- Hero 图片：来自另一个站 Hardware Reference，点进去就是那里 -->
+        <a class="hero-photo" href="https://matchman1.github.io/BiUH-web-tech/" target="_blank" rel="noopener">
+            <span class="hero-photo-frame">
+                <img src="images/hero-motherboard.jpg"
+                     alt="A laptop motherboard seen from above: processor socket, heat pipes, memory slots and ports."
+                     width="1400" height="630">
+            </span>
+            <span class="hero-photo-credit">The machine behind all this — from <strong>Hardware Reference</strong> ↗</span>
+        </a>
+
         <!-- 四张目录卡片 -->
         <section class="cards-section" aria-label="Sections of this site">
             <div class="cards">
@@ -37,7 +57,7 @@
                 <a class="card" href="quotes.html">
                     <span class="card-num">01</span>
                     <h2 class="card-title">Quotes</h2>
-                    <p class="card-text">Eight lines worth reading twice, from Žižek to Engelbart.</p>
+                    <p class="card-text">Eighteen lines worth reading twice, from Žižek to Engelbart.</p>
                     <span class="card-arrow" aria-hidden="true">→</span>
                 </a>
 

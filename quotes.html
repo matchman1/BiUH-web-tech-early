@@ -8,6 +8,16 @@
     <link rel="stylesheet" href="nav.css">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="images/icon-180.png">
+    <!-- 链接预览（Open Graph）。og:image 必须是完整网址，抓取器不会帮你补域名 -->
+    <meta property="og:title" content="Quotes · Web Tech 2026">
+    <meta property="og:description" content="Eighteen lines worth reading twice, about love, technology and consciousness.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://matchman1.github.io/BiUH-web-tech-early/quotes.html">
+    <meta property="og:image" content="https://matchman1.github.io/BiUH-web-tech-early/images/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Web Tech 2026">
+    <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
 
@@ -19,8 +29,22 @@
         <header class="quotes-head">
             <p class="quotes-eyebrow">Collection</p>
             <h1>Famous Quotes</h1>
-            <p class="quotes-sub">八句话，关于爱、技术与意识。</p>
+            <p class="quotes-sub">十八句话，关于爱、技术与意识。</p>
         </header>
+
+        <!-- 随机引文：内容由 quotes.js 从下面 18 张卡片里挑一张填进来 -->
+        <section class="quote-hero" aria-labelledby="quote-hero-label">
+            <p class="quote-hero-label" id="quote-hero-label">A line at random</p>
+
+            <div aria-live="polite">
+                <blockquote class="quote-hero-text" id="quote-hero-text">
+                    <p>Love is not idealization. Every true lover knows that if you really love a woman or a man, you do not idealize him or her.</p>
+                </blockquote>
+                <p class="quote-hero-cite" id="quote-hero-cite">Slavoj Žižek</p>
+            </div>
+
+            <button class="quote-hero-btn" id="quote-next" type="button">Another line</button>
+        </section>
 
         <div class="quotes-grid">
 
@@ -96,6 +120,96 @@
                 </footer>
             </article>
 
+            <article class="q">
+                <blockquote>
+                    <p>Simplicity is prerequisite for reliability.</p>
+                </blockquote>
+                <footer>
+                    <cite>Edsger W. Dijkstra</cite>
+                </footer>
+            </article>
+
+            <article class="q">
+                <blockquote>
+                    <p>The best way to predict the future is to invent it.</p>
+                </blockquote>
+                <footer>
+                    <cite>Alan Kay</cite>
+                </footer>
+            </article>
+
+            <article class="q">
+                <blockquote>
+                    <p>Any sufficiently advanced technology is indistinguishable from magic.</p>
+                </blockquote>
+                <footer>
+                    <cite>Arthur C. Clarke</cite>
+                </footer>
+            </article>
+
+            <article class="q">
+                <blockquote>
+                    <p>Less is more.</p>
+                </blockquote>
+                <footer>
+                    <cite>Ludwig Mies van der Rohe</cite>
+                </footer>
+            </article>
+
+            <article class="q">
+                <blockquote>
+                    <p>Design is not just what it looks like and feels like. Design is how it works.</p>
+                </blockquote>
+                <footer>
+                    <cite>Steve Jobs</cite>
+                </footer>
+            </article>
+
+            <article class="q">
+                <blockquote>
+                    <p>Machines take me by surprise with great frequency.</p>
+                </blockquote>
+                <footer>
+                    <cite>Alan Turing</cite>
+                </footer>
+            </article>
+
+            <article class="q">
+                <blockquote>
+                    <p>The purpose of computing is insight, not numbers.</p>
+                </blockquote>
+                <footer>
+                    <cite>Richard Hamming</cite>
+                </footer>
+            </article>
+
+            <article class="q">
+                <blockquote>
+                    <p>Programs must be written for people to read, and only incidentally for machines to execute.</p>
+                </blockquote>
+                <footer>
+                    <cite>Harold Abelson &amp; Gerald Jay Sussman</cite>
+                </footer>
+            </article>
+
+            <article class="q">
+                <blockquote>
+                    <p>We are stuck with technology when what we really want is just stuff that works.</p>
+                </blockquote>
+                <footer>
+                    <cite>Douglas Adams</cite>
+                </footer>
+            </article>
+
+            <article class="q">
+                <blockquote>
+                    <p>Technology is the campfire around which we tell our stories.</p>
+                </blockquote>
+                <footer>
+                    <cite>Laurie Anderson</cite>
+                </footer>
+            </article>
+
         </div>
 
         <footer class="quotes-foot">
@@ -109,5 +223,6 @@
 
     <!-- 放在 </body> 前：此时两个空元素都已存在，脚本才找得到它们 -->
     <script src="parts.js"></script>
+    <script src="quotes.js"></script>
 </body>
 </html>

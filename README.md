@@ -11,8 +11,8 @@ BiUH Web Tech 网站早期版本的一个副本，现在作为独立站点继续
 
 | 文件 | 内容 |
 |---|---|
-| `index.html` | 首页：一整块黑底 hero + 四张目录卡片 |
-| `quotes.html` | 八条引文 |
+| `index.html` | 首页：黑底 hero + 一张外链的 hero 图 + 四张目录卡片 |
+| `quotes.html` | 十八条引文，顶部随机显示一条 |
 | `project.html` | 六个项目想法，每个一句话说明 |
 | `machine.html` | 无用机器（开关会自己关掉）+ 猜数字游戏 |
 | `about.html` | 这站是怎么拼起来的、下次会怎么改 |
@@ -36,10 +36,13 @@ serve\serve.bat
 - `nav.css` —— 导航栏与站内页脚（六页共用）
 - `parts.js` —— 一个 `load(file, target)` 函数，注入导航与页脚，并给当前页高亮
 - `machine.js` —— 只服务 `machine.html`：无用机器与猜数字
+- `quotes.js` —— 只服务 `quotes.html`：从已有卡片里随机挑一条放进顶部
 
 ## 素材与图标
 
 - `images/z-y.png` —— 原始图形（2048×2048），所有图标的来源
 - `images/icon-180.png` —— 180×180，手机主屏图标（`apple-touch-icon`）
 - `images/favicon-32.png` —— 32×32，浏览器标签页图标
+- `images/og-image.jpg` —— 1200×630，链接预览图（`og:image`）
+- `images/hero-motherboard.jpg` —— 首页 hero 图，来自另一个站 Hardware Reference
 - 早期版本里的 `bilibili.jpg`、`w3.png`、`xlm.jpg` 已删除，首页也不再外链 B 站
